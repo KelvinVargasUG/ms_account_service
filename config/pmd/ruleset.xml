@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="ms-customer-service PMD Rules"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0
+             https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+
+    <description>PMD ruleset para ms-customer-service (arquitectura hexagonal, Spring Boot)</description>
+
+    <!-- ============================================================ -->
+    <!-- Best Practices                                                -->
+    <!-- ============================================================ -->
+    <rule ref="category/java/bestpractices.xml">
+        <!-- Permite arrays en anotaciones como @RequestMapping -->
+        <exclude name="UseVarargs"/>
+        <!-- Lombok genera constructores/builders, no siempre hace falta builder -->
+        <exclude name="GuardLogStatement"/>
+    </rule>
+
+    <!-- ============================================================ -->
+    <!-- Code Style                                                    -->
+    <!-- ============================================================ -->
+    <rule ref="category/java/codestyle.xml">
+        <!-- Permite nombres cortos (id, e, ex, etc.) -->
+        <exclude name="ShortVariable"/>
+        <exclude name="ShortClassName"/>
+        <exclude name="ShortMethodName"/>
+        <!-- No obliga prefijo _ en atributos -->
+        <exclude name="FieldNamingConventions"/>
+        <!-- Permite omitir 'this.' -->
+        <exclude name="UnnecessaryFullyQualifiedName"/>
+        <!-- Permite constructores sin 'this(...)' -->
+        <exclude name="OnlyOneReturn"/>
+        <!-- Permite más de un return cuando mejora la legibilidad -->
+        <exclude name="AtLeastOneConstructor"/>
+        <!-- Lombok provee constructores; JPA/Jackson requieren constructor vacío -->
+        <exclude name="UnnecessaryConstructor"/>
+        <!-- Lombok provee constructores -->
+        <exclude name="LongVariable"/>
+        <!-- Variable UUID como idPersona está bien -->
+        <exclude name="CommentDefaultAccessModifier"/>
+        <exclude name="CallSuperInConstructor"/>
+        <exclude name="TooManyStaticImports"/>
+        <!-- No exigir final en parámetros ni en variables locales: muy ruidoso -->
+        <exclude name="MethodArgumentCouldBeFinal"/>
+        <exclude name="LocalVariableCouldBeFinal"/>
+    </rule>
+
+    <!-- ============================================================ -->
+    <!-- Design                                                        -->
+    <!-- ============================================================ -->
+    <rule ref="category/java/design.xml">
+        <!-- Permite más de 7 métodos en clases de dominio/DTOs -->
+        <exclude name="TooManyMethods"/>
+        <!-- Permite dependencias en capa de infraestructura -->
+        <exclude name="LawOfDemeter"/>
+        <!-- Lombok genera muchos métodos, no contar -->
+        <exclude name="ExcessivePublicCount"/>
+        <!-- Permite clases de utilidad sin constructor -->
+        <exclude name="UseUtilityClass"/>
+        <exclude name="DataClass"/>
+        <!-- DTOs y entidades son data classes por diseño -->
+        <exclude name="LoosePackageCoupling"/>
+    </rule>
+
+    <!-- ============================================================ -->
+    <!-- Error Prone                                                   -->
+    <!-- ============================================================ -->
+    <rule ref="category/java/errorprone.xml">
+        <!-- Exceptions extienden RuntimeException, serialVersionUID no aplica (no se serializa) -->
+        <exclude name="MissingSerialVersionUID"/>
+        <!-- Permite asignación null para marcar campos opcionales -->
+        <exclude name="NullAssignment"/>
+    </rule>
+
+    <!-- ============================================================ -->
+    <!-- Multithreading                                                -->
+    <!-- ============================================================ -->
+    <rule ref="category/java/multithreading.xml">
+        <exclude name="DoNotUseThreads"/>
+        <!-- Spring gestiona los hilos -->
+        <exclude name="UseConcurrentHashMap"/>
+    </rule>
+
+    <!-- ============================================================ -->
+    <!-- Performance                                                   -->
+    <!-- ============================================================ -->
+    <rule ref="category/java/performance.xml"/>
+
+    <!-- ============================================================ -->
+    <!-- Security                                                      -->
+    <!-- ============================================================ -->
+    <rule ref="category/java/security.xml"/>
+
+</ruleset>

@@ -1,0 +1,61 @@
+package com.sofka.ms_account_service.infrastructure.config;
+
+import com.sofka.ms_account_service.application.usecase.CreateAccountUseCaseImpl;
+import com.sofka.ms_account_service.application.usecase.DeleteAccountUseCaseImpl;
+import com.sofka.ms_account_service.application.usecase.GenerateReportUseCaseImpl;
+import com.sofka.ms_account_service.application.usecase.GetAccountUseCaseImpl;
+import com.sofka.ms_account_service.application.usecase.RegisterMovementUseCaseImpl;
+import com.sofka.ms_account_service.application.usecase.UpdateAccountUseCaseImpl;
+import com.sofka.ms_account_service.domain.port.in.CreateAccountUseCase;
+import com.sofka.ms_account_service.domain.port.in.DeleteAccountUseCase;
+import com.sofka.ms_account_service.domain.port.in.GenerateReportUseCase;
+import com.sofka.ms_account_service.domain.port.in.GetAccountUseCase;
+import com.sofka.ms_account_service.domain.port.in.RegisterMovementUseCase;
+import com.sofka.ms_account_service.domain.port.in.UpdateAccountUseCase;
+import com.sofka.ms_account_service.domain.port.out.AccountRepositoryPort;
+import com.sofka.ms_account_service.domain.port.out.CustomerClientPort;
+import com.sofka.ms_account_service.domain.port.out.CustomerSnapshotRepositoryPort;
+import com.sofka.ms_account_service.domain.port.out.MovementRepositoryPort;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@RequiredArgsConstructor
+public class BeanConfiguration {
+
+    private final AccountRepositoryPort accountRepository;
+    private final MovementRepositoryPort movementRepository;
+    private final CustomerSnapshotRepositoryPort customerSnapshotRepository;
+    private final CustomerClientPort customerClient;
+
+    @Bean
+    public CreateAccountUseCase createAccountUseCase() {
+        return new CreateAccountUseCaseImpl(accountRepository, customerClient);
+    }
+
+    @Bean
+    public GetAccountUseCase getAccountUseCase() {
+        return new GetAccountUseCaseImpl(accountRepository, customerClient);
+    }
+
+    @Bean
+    public UpdateAccountUseCase updateAccountUseCase() {
+        return new UpdateAccountUseCaseImpl(accountRepository);
+    }
+
+    @Bean
+    public DeleteAccountUseCase deleteAccountUseCase() {
+        return new DeleteAccountUseCaseImpl(accountRepository);
+    }
+
+    @Bean
+    public RegisterMovementUseCase registerMovementUseCase() {
+        return new RegisterMovementUseCaseImpl(accountRepository, movementRepository, customerClient);
+    }
+
+    @Bean
+    public GenerateReportUseCase generateReportUseCase() {
+        return new GenerateReportUseCaseImpl(accountRepository, movementRepository, customerClient);
+    }
+}
