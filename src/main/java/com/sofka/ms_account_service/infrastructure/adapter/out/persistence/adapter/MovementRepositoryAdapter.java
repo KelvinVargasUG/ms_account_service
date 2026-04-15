@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -21,6 +22,21 @@ public class MovementRepositoryAdapter implements MovementRepositoryPort {
     @Override
     public Movement save(Movement movement) {
         return mapper.toDomain(jpaRepository.save(mapper.toEntity(movement)));
+    }
+
+    @Override
+    public Optional<Movement> findById(UUID id) {
+        return jpaRepository.findById(id).map(mapper::toDomain);
+    }
+
+    @Override
+    public List<Movement> findAll() {
+        return jpaRepository.findAll().stream().map(mapper::toDomain).toList();
+    }
+
+    @Override
+    public void deleteById(UUID id) {
+        jpaRepository.deleteById(id);
     }
 
     @Override

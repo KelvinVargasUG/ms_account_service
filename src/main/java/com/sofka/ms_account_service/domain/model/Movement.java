@@ -1,66 +1,52 @@
 package com.sofka.ms_account_service.domain.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Movement {
 
+    @Setter
     private UUID id;
     private LocalDateTime fecha;
+    @Setter
     private TipoMovimiento tipoMovimiento;
+    @Setter
     private BigDecimal valor;
     private BigDecimal saldo;
     private UUID cuentaId;
 
-    public Movement() {}
-
-    public Movement(UUID id, LocalDateTime fecha, TipoMovimiento tipoMovimiento,
-                    BigDecimal valor, BigDecimal saldo, UUID cuentaId) {
-        this.id = id;
-        this.fecha = fecha;
-        this.tipoMovimiento = tipoMovimiento;
-        this.valor = valor;
-        this.saldo = saldo;
-        this.cuentaId = cuentaId;
-    }
-
     public static Movement create(BigDecimal valor, BigDecimal saldoResultante, UUID cuentaId) {
         TipoMovimiento tipo = valor.compareTo(BigDecimal.ZERO) >= 0
                 ? TipoMovimiento.DEPOSITO : TipoMovimiento.RETIRO;
-        return new Movement(null, LocalDateTime.now(), tipo, valor, saldoResultante, cuentaId);
+        return builder()
+                .fecha(LocalDateTime.now())
+                .tipoMovimiento(tipo)
+                .valor(valor)
+                .saldo(saldoResultante)
+                .cuentaId(cuentaId)
+                .build();
     }
 
     public static Movement create(TipoMovimiento tipoMovimiento, BigDecimal valor,
                                    BigDecimal saldoResultante, UUID cuentaId) {
-        return new Movement(null, LocalDateTime.now(), tipoMovimiento, valor, saldoResultante, cuentaId);
+        return builder()
+                .fecha(LocalDateTime.now())
+                .tipoMovimiento(tipoMovimiento)
+                .valor(valor)
+                .saldo(saldoResultante)
+                .cuentaId(cuentaId)
+                .build();
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public LocalDateTime getFecha() {
-        return fecha;
-    }
-
-    public TipoMovimiento getTipoMovimiento() {
-        return tipoMovimiento;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public BigDecimal getSaldo() {
-        return saldo;
-    }
-
-    public UUID getCuentaId() {
-        return cuentaId;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 }

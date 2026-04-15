@@ -2,6 +2,7 @@ package com.sofka.ms_account_service.infrastructure.adapter.in.web.exception;
 
 import com.sofka.ms_account_service.domain.exception.AccountNotFoundException;
 import com.sofka.ms_account_service.domain.exception.DuplicateAccountException;
+import com.sofka.ms_account_service.domain.exception.MovementNotFoundException;
 import com.sofka.ms_account_service.domain.exception.InactiveAccountException;
 import com.sofka.ms_account_service.domain.exception.InsufficientBalanceException;
 import com.sofka.ms_account_service.domain.exception.InvalidClientException;
@@ -23,6 +24,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccountNotFoundException.class)
     public ResponseEntity<ApiResponse<Void>> handle(AccountNotFoundException ex) {
+        return ResponseUtil.error(404, ex.getMessage());
+    }
+
+    @ExceptionHandler(MovementNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handle(MovementNotFoundException ex) {
         return ResponseUtil.error(404, ex.getMessage());
     }
 

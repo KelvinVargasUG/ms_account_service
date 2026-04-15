@@ -1,0 +1,7 @@
+.gradle
+build
+bin
+doc
+openspec
+.git
+*.md

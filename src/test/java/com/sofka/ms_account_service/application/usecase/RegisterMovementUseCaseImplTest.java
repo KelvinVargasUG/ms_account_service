@@ -11,6 +11,10 @@ import com.sofka.ms_account_service.domain.model.TipoMovimiento;
 import com.sofka.ms_account_service.domain.port.out.AccountRepositoryPort;
 import com.sofka.ms_account_service.domain.port.out.CustomerClientPort;
 import com.sofka.ms_account_service.domain.port.out.MovementRepositoryPort;
+import com.sofka.ms_account_service.domain.validation.AccountActiveHandler;
+import com.sofka.ms_account_service.domain.validation.AccountExistsHandler;
+import com.sofka.ms_account_service.domain.validation.ClientActiveHandler;
+import com.sofka.ms_account_service.domain.validation.SufficientBalanceHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,7 +47,17 @@ class RegisterMovementUseCaseImplTest {
 
     @BeforeEach
     void setUp() {
-        useCase = new RegisterMovementUseCaseImpl(accountRepository, movementRepository, customerClient);
+        AccountExistsHandler accountExists = new AccountExistsHandler(accountRepository);
+        ClientActiveHandler clientActive = new ClientActiveHandler(customerClient);
+        AccountActiveHandler accountActive = new AccountActiveHandler();
+        SufficientBalanceHandler sufficientBalance = new SufficientBalanceHandler();
+
+        accountExists.setNext(clientActive);
+        clientActive.setNext(accountActive);
+        accountActive.setNext(sufficientBalance);
+
+        useCase = new RegisterMovementUseCaseImpl(
+                accountExists, accountRepository, movementRepository);
         activeAccount = new Account(accountId, numeroCuenta, TipoCuenta.AHORRO,
                 saldoInicial, saldoInicial, true, clienteId);
     }

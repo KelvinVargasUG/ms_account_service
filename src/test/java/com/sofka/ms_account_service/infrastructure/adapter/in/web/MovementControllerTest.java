@@ -2,11 +2,16 @@ package com.sofka.ms_account_service.infrastructure.adapter.in.web;
 
 import com.sofka.ms_account_service.domain.exception.InactiveAccountException;
 import com.sofka.ms_account_service.domain.exception.InsufficientBalanceException;
+import com.sofka.ms_account_service.domain.exception.MovementNotFoundException;
 import com.sofka.ms_account_service.domain.model.Movement;
 import com.sofka.ms_account_service.domain.model.TipoCuenta;
 import com.sofka.ms_account_service.domain.model.TipoMovimiento;
+import com.sofka.ms_account_service.domain.port.in.DeleteMovementUseCase;
+import com.sofka.ms_account_service.domain.port.in.GetMovementUseCase;
 import com.sofka.ms_account_service.domain.port.in.RegisterMovementUseCase;
+import com.sofka.ms_account_service.domain.port.in.UpdateMovementUseCase;
 import com.sofka.ms_account_service.infrastructure.adapter.in.web.dto.MovementRequest;
+import com.sofka.ms_account_service.infrastructure.adapter.in.web.dto.MovementUpdateRequest;
 import com.sofka.ms_account_service.infrastructure.adapter.in.web.exception.GlobalExceptionHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,11 +25,18 @@ import tools.jackson.databind.ObjectMapper;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -33,6 +45,15 @@ class MovementControllerTest {
 
     @Mock
     RegisterMovementUseCase registerMovementUseCase;
+
+    @Mock
+    GetMovementUseCase getMovementUseCase;
+
+    @Mock
+    UpdateMovementUseCase updateMovementUseCase;
+
+    @Mock
+    DeleteMovementUseCase deleteMovementUseCase;
 
     MockMvc mockMvc;
     ObjectMapper objectMapper = new ObjectMapper();
@@ -45,7 +66,9 @@ class MovementControllerTest {
 
     @BeforeEach
     void setUp() {
-        MovementController controller = new MovementController(registerMovementUseCase);
+        MovementController controller = new MovementController(
+                registerMovementUseCase, getMovementUseCase,
+                updateMovementUseCase, deleteMovementUseCase);
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .setControllerAdvice(new GlobalExceptionHandler())
                 .build();
@@ -91,5 +114,101 @@ class MovementControllerTest {
                         .content(objectMapper.writeValueAsString(sampleRequest)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.statusCode").value(400));
+    }
+
+    @Test
+    void shouldReturn200WhenListingAllMovements() throws Exception {
+        Movement movement = new Movement(movementId, LocalDateTime.now(),
+                TipoMovimiento.DEPOSITO, BigDecimal.valueOf(200), BigDecimal.valueOf(700), cuentaId);
+        when(getMovementUseCase.findAll()).thenReturn(List.of(movement));
+
+        mockMvc.perform(get("/movimientos"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.statusCode").value(200))
+                .andExpect(jsonPath("$.data").isArray())
+                .andExpect(jsonPath("$.data[0].tipoMovimiento").value("DEPOSITO"));
+    }
+
+    @Test
+    void shouldReturn200WhenListingEmptyMovements() throws Exception {
+        when(getMovementUseCase.findAll()).thenReturn(List.of());
+
+        mockMvc.perform(get("/movimientos"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data").isArray())
+                .andExpect(jsonPath("$.data").isEmpty());
+    }
+
+    @Test
+    void shouldReturn200WhenFindingMovementById() throws Exception {
+        Movement movement = new Movement(movementId, LocalDateTime.now(),
+                TipoMovimiento.RETIRO, BigDecimal.valueOf(100), BigDecimal.valueOf(400), cuentaId);
+        when(getMovementUseCase.findById(movementId)).thenReturn(movement);
+
+        mockMvc.perform(get("/movimientos/{id}", movementId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.statusCode").value(200))
+                .andExpect(jsonPath("$.data.tipoMovimiento").value("RETIRO"))
+                .andExpect(jsonPath("$.data.valor").value(100));
+    }
+
+    @Test
+    void shouldReturn404WhenMovementNotFound() throws Exception {
+        when(getMovementUseCase.findById(movementId))
+                .thenThrow(new MovementNotFoundException("Movimiento no encontrado: " + movementId));
+
+        mockMvc.perform(get("/movimientos/{id}", movementId))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.statusCode").value(404))
+                .andExpect(jsonPath("$.status").value("error"));
+    }
+
+    @Test
+    void shouldReturn200WhenUpdatingMovement() throws Exception {
+        MovementUpdateRequest updateRequest = new MovementUpdateRequest(
+                TipoMovimiento.DEPOSITO, BigDecimal.valueOf(300));
+        Movement updated = new Movement(movementId, LocalDateTime.now(),
+                TipoMovimiento.DEPOSITO, BigDecimal.valueOf(300), BigDecimal.valueOf(800), cuentaId);
+        when(updateMovementUseCase.execute(eq(movementId), any(), any())).thenReturn(updated);
+
+        mockMvc.perform(put("/movimientos/{id}", movementId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateRequest)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.statusCode").value(200))
+                .andExpect(jsonPath("$.data.valor").value(300));
+    }
+
+    @Test
+    void shouldReturn404WhenUpdatingNonExistentMovement() throws Exception {
+        MovementUpdateRequest updateRequest = new MovementUpdateRequest(
+                TipoMovimiento.RETIRO, BigDecimal.valueOf(50));
+        when(updateMovementUseCase.execute(eq(movementId), any(), any()))
+                .thenThrow(new MovementNotFoundException("Movimiento no encontrado: " + movementId));
+
+        mockMvc.perform(put("/movimientos/{id}", movementId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateRequest)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.statusCode").value(404));
+    }
+
+    @Test
+    void shouldReturn200WhenDeletingMovement() throws Exception {
+        doNothing().when(deleteMovementUseCase).execute(movementId);
+
+        mockMvc.perform(delete("/movimientos/{id}", movementId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.statusCode").value(200));
+    }
+
+    @Test
+    void shouldReturn404WhenDeletingNonExistentMovement() throws Exception {
+        doThrow(new MovementNotFoundException("Movimiento no encontrado: " + movementId))
+                .when(deleteMovementUseCase).execute(movementId);
+
+        mockMvc.perform(delete("/movimientos/{id}", movementId))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.statusCode").value(404));
     }
 }
