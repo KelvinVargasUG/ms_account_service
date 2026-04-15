@@ -9,6 +9,31 @@ Microservicio responsable de la gestión de cuentas bancarias y movimientos tran
 - Generación de reportes de estado de cuenta por rango de fechas
 - Comunicación inter-servicio con ms-customer-service (con Circuit Breaker)
 
+## Diagrama de Arquitectura
+
+```mermaid
+flowchart TB
+    subgraph Docker Compose
+        Client([Cliente HTTP]) -->|REST 8080| CS["ms-customer-service\n/clientes"]
+        Client -->|REST 8081| AS["ms-account-service\n/cuentas · /movimientos · /reportes"]
+
+        CS -->|JPA| DB_C[(PostgreSQL\nms_customer_db)]
+        CS -->|Inserta evento| OT[(outbox_eventos)]
+
+        W["worker\n(Outbox Poller)"] -->|Lee outbox| OT
+        W -->|Publica| K{{Kafka\ncustomer-events}}
+
+        AS -->|Consume| K
+        AS -->|JPA| DB_A[(PostgreSQL\nms_account_db)]
+        AS -->|Snapshot local| SN[(clientes_snapshot)]
+    end
+
+    style CS fill:#4CAF50,color:#fff
+    style AS fill:#2196F3,color:#fff
+    style W fill:#FF9800,color:#fff
+    style K fill:#333,color:#fff
+```
+
 ## Diagrama Entidad-Relación
 
 ```mermaid
@@ -33,7 +58,20 @@ erDiagram
 
     CUENTA ||--o{ MOVIMIENTO : "registra"
 ```
-## Cómo ejecutar el proyecto
+## Despliegue con Docker Compose
+
+Este microservicio se despliega junto con toda la infraestructura (PostgreSQL, Kafka, worker y ms-customer-service) mediante Docker Compose.
+El archivo `docker-compose.yml` se encuentra en el repositorio **ms-customer-service**, dentro de la carpeta `docker/`.
+
+```bash
+# Desde el directorio ms-customer-service/docker
+cd ../ms-customer-service/docker
+docker compose up --build
+```
+
+Consulta la guía completa de despliegue en: **ms-customer-service/docker/README.md**
+
+## Cómo ejecutar localmente (sin Docker)
 
 ### Prerrequisitos
 
