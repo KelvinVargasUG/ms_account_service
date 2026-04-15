@@ -7,15 +7,15 @@ Microservicio responsable de la gestión de cuentas bancarias y movimientos tran
 - Creación y gestión de cuentas bancarias asociadas a un cliente
 - Registro de depósitos y retiros con validación de saldo
 - Generación de reportes de estado de cuenta por rango de fechas
-- Comunicación inter-servicio con ms-customer-service (con Circuit Breaker)
+- Comunicación inter-servicio con ms-customer-service (eventos Kafka + snapshot local)
 
 ## Diagrama de Arquitectura
 
 ```mermaid
 flowchart TB
     subgraph Docker Compose
-        Client([Cliente HTTP]) -->|REST 8080| CS["ms-customer-service\n/clientes"]
-        Client -->|REST 8081| AS["ms-account-service\n/cuentas · /movimientos · /reportes"]
+        Client([Cliente HTTP]) -->|REST 8080| CS["ms-customer-service\n/api/ms-customer-service/clientes"]
+        Client -->|REST 8081| AS["ms-account-service\n/api/ms-account-service/cuentas\n/movimientos · /reportes"]
 
         CS -->|JPA| DB_C[(PostgreSQL\nms_customer_db)]
         CS -->|Inserta evento| OT[(outbox_eventos)]
@@ -90,7 +90,7 @@ Consulta la guía completa de despliegue en: **ms-customer-service/docker/README
 | Gradle      | Wrapper incluido |
 | PostgreSQL  | 13+            |
 
-> **Nota:** Este servicio requiere que `ms-customer-service` esté en ejecución para la comunicación inter-servicio.
+> **Nota:** Este servicio consume eventos de `ms-customer-service` a través de Kafka. Para ejecución local completa, se requiere PostgreSQL y Kafka disponibles.
 
 ### 1. Configurar la base de datos
 
@@ -116,10 +116,7 @@ spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 
-server.port=8082
-
-# URL del servicio de clientes
-ms.customer-service.url=http://localhost:8081
+server.port=8081
 ```
 
 ### 3. Compilar el proyecto
@@ -144,7 +141,7 @@ java -jar build/libs/ms-account-service-0.0.1-SNAPSHOT.jar
 
 ### 5. Verificar
 
-El servicio estará disponible en: `http://localhost:8082`
+El servicio estará disponible en: `http://localhost:8081`
 
 Endpoints principales:
 - `GET  /cuentas` — lista todas las cuentas
@@ -154,7 +151,11 @@ Endpoints principales:
 - `DELETE /cuentas/{id}` — eliminación lógica de una cuenta
 - `POST /movimientos` — registra un depósito o retiro
 - `GET  /movimientos` — lista todos los movimientos
-- `GET  /reportes?clienteId={id}&fechaInicio={fecha}&fechaFin={fecha}` — reporte de estado de cuenta
+- `GET  /movimientos/{id}` — obtiene un movimiento por ID
+- `DELETE /movimientos/{id}` — elimina un movimiento y registra un movimiento de reverso
+- `GET  /reportes?numeroCuenta={num}&fechaInicio={fecha}&fechaFin={fecha}` — reporte de estado de cuenta (todos los parámetros son opcionales)
+
+**Swagger UI:** [http://localhost:8081/api/ms-account-service/swagger-ui/index.html](http://localhost:8081/api/ms-account-service/swagger-ui/index.html)
 
 ### Ejecutar pruebas
 
