@@ -8,6 +8,7 @@ import com.sofka.ms_account_service.domain.exception.InsufficientBalanceExceptio
 import com.sofka.ms_account_service.domain.exception.InvalidClientException;
 import com.sofka.ms_account_service.infrastructure.adapter.in.web.shared.ApiResponse;
 import com.sofka.ms_account_service.infrastructure.adapter.in.web.shared.ResponseUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -71,6 +73,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleGeneric(Exception ex) {
+        log.error("Error no controlado: {}", ex.getMessage(), ex);
         return ResponseUtil.error(500, "Error interno del servidor");
     }
 
