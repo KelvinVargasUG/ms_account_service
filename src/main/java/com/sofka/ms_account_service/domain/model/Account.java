@@ -97,6 +97,7 @@ public class Account {
         return new AccountBuilder();
     }
 
+    @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
     public static class AccountBuilder {
 
         private UUID id;

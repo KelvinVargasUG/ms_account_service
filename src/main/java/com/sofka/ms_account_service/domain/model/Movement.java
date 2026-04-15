@@ -89,6 +89,7 @@ public class Movement {
         return new MovementBuilder();
     }
 
+    @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
     public static class MovementBuilder {
 
         private UUID id;
