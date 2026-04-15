@@ -1,7 +1,9 @@
 package com.sofka.ms_account_service.domain.port.in;
 
+import com.sofka.ms_account_service.domain.model.Movement;
+
 import java.util.UUID;
 
 public interface DeleteMovementUseCase {
-    void execute(UUID id);
+    Movement execute(UUID id);
 }

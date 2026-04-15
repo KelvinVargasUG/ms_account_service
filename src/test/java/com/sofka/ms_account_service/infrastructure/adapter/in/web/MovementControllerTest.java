@@ -9,9 +9,7 @@ import com.sofka.ms_account_service.domain.model.TipoMovimiento;
 import com.sofka.ms_account_service.domain.port.in.DeleteMovementUseCase;
 import com.sofka.ms_account_service.domain.port.in.GetMovementUseCase;
 import com.sofka.ms_account_service.domain.port.in.RegisterMovementUseCase;
-import com.sofka.ms_account_service.domain.port.in.UpdateMovementUseCase;
 import com.sofka.ms_account_service.infrastructure.adapter.in.web.dto.MovementRequest;
-import com.sofka.ms_account_service.infrastructure.adapter.in.web.dto.MovementUpdateRequest;
 import com.sofka.ms_account_service.infrastructure.adapter.in.web.exception.GlobalExceptionHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,14 +27,11 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -48,9 +43,6 @@ class MovementControllerTest {
 
     @Mock
     GetMovementUseCase getMovementUseCase;
-
-    @Mock
-    UpdateMovementUseCase updateMovementUseCase;
 
     @Mock
     DeleteMovementUseCase deleteMovementUseCase;
@@ -68,7 +60,7 @@ class MovementControllerTest {
     void setUp() {
         MovementController controller = new MovementController(
                 registerMovementUseCase, getMovementUseCase,
-                updateMovementUseCase, deleteMovementUseCase);
+                deleteMovementUseCase);
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .setControllerAdvice(new GlobalExceptionHandler())
                 .build();
@@ -164,48 +156,22 @@ class MovementControllerTest {
     }
 
     @Test
-    void shouldReturn200WhenUpdatingMovement() throws Exception {
-        MovementUpdateRequest updateRequest = new MovementUpdateRequest(
-                TipoMovimiento.DEPOSITO, BigDecimal.valueOf(300));
-        Movement updated = new Movement(movementId, LocalDateTime.now(),
-                TipoMovimiento.DEPOSITO, BigDecimal.valueOf(300), BigDecimal.valueOf(800), cuentaId);
-        when(updateMovementUseCase.execute(eq(movementId), any(), any())).thenReturn(updated);
-
-        mockMvc.perform(put("/movimientos/{id}", movementId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updateRequest)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.statusCode").value(200))
-                .andExpect(jsonPath("$.data.valor").value(300));
-    }
-
-    @Test
-    void shouldReturn404WhenUpdatingNonExistentMovement() throws Exception {
-        MovementUpdateRequest updateRequest = new MovementUpdateRequest(
-                TipoMovimiento.RETIRO, BigDecimal.valueOf(50));
-        when(updateMovementUseCase.execute(eq(movementId), any(), any()))
-                .thenThrow(new MovementNotFoundException("Movimiento no encontrado: " + movementId));
-
-        mockMvc.perform(put("/movimientos/{id}", movementId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updateRequest)))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.statusCode").value(404));
-    }
-
-    @Test
-    void shouldReturn200WhenDeletingMovement() throws Exception {
-        doNothing().when(deleteMovementUseCase).execute(movementId);
+    void shouldReturn200WhenDeletingMovementWithReversal() throws Exception {
+        Movement reversal = new Movement(UUID.randomUUID(), LocalDateTime.now(),
+                TipoMovimiento.RETIRO, BigDecimal.valueOf(200), BigDecimal.valueOf(500), cuentaId);
+        when(deleteMovementUseCase.execute(movementId)).thenReturn(reversal);
 
         mockMvc.perform(delete("/movimientos/{id}", movementId))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.statusCode").value(200));
+                .andExpect(jsonPath("$.statusCode").value(200))
+                .andExpect(jsonPath("$.data.tipoMovimiento").value("RETIRO"))
+                .andExpect(jsonPath("$.data.valor").value(200));
     }
 
     @Test
     void shouldReturn404WhenDeletingNonExistentMovement() throws Exception {
-        doThrow(new MovementNotFoundException("Movimiento no encontrado: " + movementId))
-                .when(deleteMovementUseCase).execute(movementId);
+        when(deleteMovementUseCase.execute(movementId))
+                .thenThrow(new MovementNotFoundException("Movimiento no encontrado: " + movementId));
 
         mockMvc.perform(delete("/movimientos/{id}", movementId))
                 .andExpect(status().isNotFound())

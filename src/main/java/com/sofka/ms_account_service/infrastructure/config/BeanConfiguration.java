@@ -8,7 +8,6 @@ import com.sofka.ms_account_service.application.usecase.GetAccountUseCaseImpl;
 import com.sofka.ms_account_service.application.usecase.GetMovementUseCaseImpl;
 import com.sofka.ms_account_service.application.usecase.RegisterMovementUseCaseImpl;
 import com.sofka.ms_account_service.application.usecase.UpdateAccountUseCaseImpl;
-import com.sofka.ms_account_service.application.usecase.UpdateMovementUseCaseImpl;
 import com.sofka.ms_account_service.domain.port.in.CreateAccountUseCase;
 import com.sofka.ms_account_service.domain.port.in.DeleteAccountUseCase;
 import com.sofka.ms_account_service.domain.port.in.DeleteMovementUseCase;
@@ -17,7 +16,6 @@ import com.sofka.ms_account_service.domain.port.in.GetAccountUseCase;
 import com.sofka.ms_account_service.domain.port.in.GetMovementUseCase;
 import com.sofka.ms_account_service.domain.port.in.RegisterMovementUseCase;
 import com.sofka.ms_account_service.domain.port.in.UpdateAccountUseCase;
-import com.sofka.ms_account_service.domain.port.in.UpdateMovementUseCase;
 import com.sofka.ms_account_service.domain.port.out.AccountRepositoryPort;
 import com.sofka.ms_account_service.domain.port.out.CustomerClientPort;
 import com.sofka.ms_account_service.domain.port.out.MovementRepositoryPort;
@@ -73,12 +71,7 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public UpdateMovementUseCase updateMovementUseCase() {
-        return new UpdateMovementUseCaseImpl(movementRepository);
-    }
-
-    @Bean
     public DeleteMovementUseCase deleteMovementUseCase() {
-        return new DeleteMovementUseCaseImpl(movementRepository);
+        return new DeleteMovementUseCaseImpl(movementRepository, accountRepository);
     }
 }
