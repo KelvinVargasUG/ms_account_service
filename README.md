@@ -58,6 +58,15 @@ erDiagram
 
     CUENTA ||--o{ MOVIMIENTO : "registra"
 ```
+
+## Colección de Postman
+
+En la carpeta `doc/` se encuentra la colección de Postman con todas las peticiones preconfiguradas para probar los endpoints de este microservicio:
+
+📁 [`doc/Prueba.postman_collection.json`](doc/Prueba.postman_collection.json)
+
+Para importarla: abre Postman → **Import** → selecciona el archivo.
+
 ## Despliegue con Docker Compose
 
 Este microservicio se despliega junto con toda la infraestructura (PostgreSQL, Kafka, worker y ms-customer-service) mediante Docker Compose.

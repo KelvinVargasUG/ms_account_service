@@ -1,0 +1,1168 @@
+{
+  "info": {
+    "_postman_id": "97757460-d890-42fa-9252-1e92f567aa50",
+    "name": "Prueba",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "19379682"
+  },
+  "item": [
+    {
+      "name": "ms-customer-service",
+      "item": [
+        {
+          "name": "/clientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://{{servidor}}:{{puertoCustomer}}/api/{{metodoCustomer}}/clientes",
+              "protocol": "http",
+              "host": [
+                "{{servidor}}"
+              ],
+              "port": "{{puertoCustomer}}",
+              "path": [
+                "api",
+                "{{metodoCustomer}}",
+                "clientes"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "/clientes",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/clientes",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "clientes"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Apr 2026 06:35:38 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"statusCode\": 200,\n    \"status\": \"OK\",\n    \"message\": \"Success\",\n    \"data\": [\n        {\n            \"idCliente\": \"56b52b04-7841-40dc-8e75-8268b154bade\",\n            \"nombre\": \"Josue 2\",\n            \"genero\": \"string\",\n            \"edad\": 0,\n            \"identificacion\": \"09542121212\",\n            \"direccion\": \"string\",\n            \"telefono\": \"string\",\n            \"estado\": false\n        },\n        {\n            \"idCliente\": \"c09c6620-5b31-4b26-b427-1642862141cf\",\n            \"nombre\": \"Kelvin Vargas Prueba Final\",\n            \"genero\": \"Masculino\",\n            \"edad\": 20,\n            \"identificacion\": \"0943713727\",\n            \"direccion\": null,\n            \"telefono\": null,\n            \"estado\": true\n        },\n        {\n            \"idCliente\": \"6a487c52-0790-4f17-8632-37c1ad57fa60\",\n            \"nombre\": \"Kelvin Vargas Prueba Editado\",\n            \"genero\": \"Masculino\",\n            \"edad\": 25,\n            \"identificacion\": \"0943713721\",\n            \"direccion\": \"El ejido\",\n            \"telefono\": \"0998757172\",\n            \"estado\": false\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "/clientes/id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://{{servidor}}:{{puertoCustomer}}/api/{{metodoCustomer}}/clientes/6a487c52-0790-4f17-8632-37c1ad57fa60",
+              "protocol": "http",
+              "host": [
+                "{{servidor}}"
+              ],
+              "port": "{{puertoCustomer}}",
+              "path": [
+                "api",
+                "{{metodoCustomer}}",
+                "clientes",
+                "6a487c52-0790-4f17-8632-37c1ad57fa60"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "/clientes/id",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/clientes/6a487c52-0790-4f17-8632-37c1ad57fa60",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "clientes",
+                    "6a487c52-0790-4f17-8632-37c1ad57fa60"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Apr 2026 06:35:21 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"statusCode\": 200,\n    \"status\": \"OK\",\n    \"message\": \"Success\",\n    \"data\": {\n        \"idCliente\": \"6a487c52-0790-4f17-8632-37c1ad57fa60\",\n        \"nombre\": \"Kelvin Vargas Prueba Editado\",\n        \"genero\": \"Masculino\",\n        \"edad\": 25,\n        \"identificacion\": \"0943713721\",\n        \"direccion\": \"El ejido\",\n        \"telefono\": \"0998757172\",\n        \"estado\": false\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/clientes",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"edad\":20,\n    \"identificacion\":\"0943713721\",\n    \"contrasena\":\"123456\",\n    \"nombre\":\"Kelvin Vargas Prueba Final\",\n    \"genero\":\"Masculino\",\n    \"direccion\": \"Otavalo sn y principal\",\n    \"telefono\": \"0998757172\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://{{servidor}}:{{puertoCustomer}}/api/{{metodoCustomer}}/clientes",
+              "protocol": "http",
+              "host": [
+                "{{servidor}}"
+              ],
+              "port": "{{puertoCustomer}}",
+              "path": [
+                "api",
+                "{{metodoCustomer}}",
+                "clientes"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "/clientes - Identificacion Duplicada",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"edad\":20,\n    \"identificacion\":\"0943713727\",\n    \"contrasena\":\"123456\",\n    \"nombre\":\"Kelvin Vargas Prueba Final\",\n    \"genero\":\"Masculino\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/clientes",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "clientes"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Apr 2026 06:27:30 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"statusCode\": 409,\n    \"status\": \"CONFLICT\",\n    \"message\": \"Identificación ya registrada: 0943713727\",\n    \"data\": null\n}"
+            },
+            {
+              "name": "/clientes - Correcto",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"edad\":20,\n    \"identificacion\":\"0943713721\",\n    \"contrasena\":\"123456\",\n    \"nombre\":\"Kelvin Vargas Prueba Final\",\n    \"genero\":\"Masculino\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/clientes",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "clientes"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Apr 2026 06:27:58 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"statusCode\": 201,\n    \"status\": \"CREATED\",\n    \"message\": \"Resource created successfully\",\n    \"data\": {\n        \"idCliente\": \"6a487c52-0790-4f17-8632-37c1ad57fa60\",\n        \"nombre\": \"Kelvin Vargas Prueba Final\",\n        \"genero\": \"Masculino\",\n        \"edad\": 20,\n        \"identificacion\": \"0943713721\",\n        \"direccion\": null,\n        \"telefono\": null,\n        \"estado\": true\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/clientes",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"Kelvin Vargas Prueba Editado\",\n    \"genero\": \"Masculino\",\n    \"edad\": 25,\n    \"direccion\": \"El ejido\",\n    \"telefono\": \"0998757172\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://{{servidor}}:{{puertoCustomer}}/api/{{metodoCustomer}}/clientes/c09c6620-5b31-4b26-b427-1642862141cf",
+              "protocol": "http",
+              "host": [
+                "{{servidor}}"
+              ],
+              "port": "{{puertoCustomer}}",
+              "path": [
+                "api",
+                "{{metodoCustomer}}",
+                "clientes",
+                "c09c6620-5b31-4b26-b427-1642862141cf"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "/clientes",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"nombre\": \"Kelvin Vargas Prueba Editado\",\n    \"genero\": \"Masculino\",\n    \"edad\": 25,\n    \"direccion\": \"El ejido\",\n    \"telefono\": \"0998757172\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/clientes/6a487c52-0790-4f17-8632-37c1ad57fa60",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "clientes",
+                    "6a487c52-0790-4f17-8632-37c1ad57fa60"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Apr 2026 06:30:46 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"statusCode\": 200,\n    \"status\": \"OK\",\n    \"message\": \"Cliente actualizado\",\n    \"data\": {\n        \"idCliente\": \"6a487c52-0790-4f17-8632-37c1ad57fa60\",\n        \"nombre\": \"Kelvin Vargas Prueba Editado\",\n        \"genero\": \"Masculino\",\n        \"edad\": 25,\n        \"identificacion\": \"0943713721\",\n        \"direccion\": \"El ejido\",\n        \"telefono\": \"0998757172\",\n        \"estado\": true\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/clientes",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://{{servidor}}:{{puertoCustomer}}/api/{{metodoCustomer}}/clientes/6a487c52-0790-4f17-8632-37c1ad57fa60",
+              "protocol": "http",
+              "host": [
+                "{{servidor}}"
+              ],
+              "port": "{{puertoCustomer}}",
+              "path": [
+                "api",
+                "{{metodoCustomer}}",
+                "clientes",
+                "6a487c52-0790-4f17-8632-37c1ad57fa60"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "/clientes",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/clientes/6a487c52-0790-4f17-8632-37c1ad57fa60",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "clientes",
+                    "6a487c52-0790-4f17-8632-37c1ad57fa60"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Apr 2026 06:32:04 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"statusCode\": 200,\n    \"status\": \"OK\",\n    \"message\": \"Cliente eliminado exitosamente\",\n    \"data\": null\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ms-account-service",
+      "item": [
+        {
+          "name": "/cuentas/id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://{{servidor}}:{{puertoAccount}}/api/{{metodoAccount}}/cuentas/ad1761f1-397a-4ce4-9ea7-1503c81dc4cb",
+              "protocol": "http",
+              "host": [
+                "{{servidor}}"
+              ],
+              "port": "{{puertoAccount}}",
+              "path": [
+                "api",
+                "{{metodoAccount}}",
+                "cuentas",
+                "ad1761f1-397a-4ce4-9ea7-1503c81dc4cb"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "/cuentas/id",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8081/cuentas/ad1761f1-397a-4ce4-9ea7-1503c81dc4cb",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "cuentas",
+                    "ad1761f1-397a-4ce4-9ea7-1503c81dc4cb"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Apr 2026 06:43:15 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"statusCode\": 200,\n    \"status\": \"success\",\n    \"message\": \"OK\",\n    \"data\": {\n        \"id\": \"ad1761f1-397a-4ce4-9ea7-1503c81dc4cb\",\n        \"numeroCuenta\": \"121212121221\",\n        \"tipoCuenta\": \"AHORRO\",\n        \"saldoInicial\": 10,\n        \"saldo\": 10,\n        \"estado\": true,\n        \"clienteId\": \"56b52b04-7841-40dc-8e75-8268b154bade\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/cuentas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://{{servidor}}:{{puertoAccount}}/api/{{metodoAccount}}/cuentas",
+              "protocol": "http",
+              "host": [
+                "{{servidor}}"
+              ],
+              "port": "{{puertoAccount}}",
+              "path": [
+                "api",
+                "{{metodoAccount}}",
+                "cuentas"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "/cuentas",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8081/cuentas",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "cuentas"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Apr 2026 07:06:18 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"statusCode\": 200,\n    \"status\": \"success\",\n    \"message\": \"OK\",\n    \"data\": [\n        {\n            \"id\": \"ad1761f1-397a-4ce4-9ea7-1503c81dc4cb\",\n            \"numeroCuenta\": \"121212121221\",\n            \"tipoCuenta\": \"AHORRO\",\n            \"saldoInicial\": 10,\n            \"saldo\": 10,\n            \"estado\": true,\n            \"clienteId\": \"c09c6620-5b31-4b26-b427-1642862141cf\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "/cuentas",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"clienteId\":\"5f95bf31-28d3-49a6-bea0-0ba999c995ec\",\n    \"saldoInicial\":1000,\n    \"tipoCuenta\":\"CORRIENTE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://{{servidor}}:{{puertoAccount}}/api/{{metodoAccount}}/cuentas",
+              "protocol": "http",
+              "host": [
+                "{{servidor}}"
+              ],
+              "port": "{{puertoAccount}}",
+              "path": [
+                "api",
+                "{{metodoAccount}}",
+                "cuentas"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "/cuentas",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"clienteId\":\"c09c6620-5b31-4b26-b427-1642862141cf\",\n    \"saldoInicial\":1000,\n    \"tipoCuenta\":\"CORRIENTE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/cuentas",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "cuentas"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Apr 2026 14:57:38 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"statusCode\": 201,\n    \"status\": \"success\",\n    \"message\": \"Created\",\n    \"data\": {\n        \"id\": \"9908864a-d102-4cbb-ad55-4d4ca941cb5a\",\n        \"numeroCuenta\": \"9763893434\",\n        \"tipoCuenta\": \"CORRIENTE\",\n        \"saldoInicial\": 1000,\n        \"saldo\": 1000,\n        \"estado\": true,\n        \"clienteId\": \"c09c6620-5b31-4b26-b427-1642862141cf\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/cuentas",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"estado\": true,\n    \"tipoCuenta\": \"CORRIENTE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://{{servidor}}:{{puertoAccount}}/api/{{metodoAccount}}/cuentas/9908864a-d102-4cbb-ad55-4d4ca941cb5a",
+              "protocol": "http",
+              "host": [
+                "{{servidor}}"
+              ],
+              "port": "{{puertoAccount}}",
+              "path": [
+                "api",
+                "{{metodoAccount}}",
+                "cuentas",
+                "9908864a-d102-4cbb-ad55-4d4ca941cb5a"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "/cuentas",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"estado\": true,\n    \"tipoCuenta\": \"CORRIENTE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/cuentas/9908864a-d102-4cbb-ad55-4d4ca941cb5a",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "cuentas",
+                    "9908864a-d102-4cbb-ad55-4d4ca941cb5a"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Apr 2026 15:04:46 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"statusCode\": 200,\n    \"status\": \"success\",\n    \"message\": \"OK\",\n    \"data\": {\n        \"id\": \"9908864a-d102-4cbb-ad55-4d4ca941cb5a\",\n        \"numeroCuenta\": \"9763893434\",\n        \"tipoCuenta\": \"CORRIENTE\",\n        \"saldoInicial\": 1000,\n        \"saldo\": 1000,\n        \"estado\": true,\n        \"clienteId\": \"c09c6620-5b31-4b26-b427-1642862141cf\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/cuentas",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"estado\": true,\n    \"tipoCuenta\": \"CORRIENTE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://{{servidor}}:{{puertoAccount}}/api/{{metodoAccount}}/cuentas/9908864a-d102-4cbb-ad55-4d4ca941cb5a",
+              "protocol": "http",
+              "host": [
+                "{{servidor}}"
+              ],
+              "port": "{{puertoAccount}}",
+              "path": [
+                "api",
+                "{{metodoAccount}}",
+                "cuentas",
+                "9908864a-d102-4cbb-ad55-4d4ca941cb5a"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "/cuentas",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"estado\": true,\n    \"tipoCuenta\": \"CORRIENTE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/cuentas/9908864a-d102-4cbb-ad55-4d4ca941cb5a",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "cuentas",
+                    "9908864a-d102-4cbb-ad55-4d4ca941cb5a"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Apr 2026 15:13:19 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"statusCode\": 200,\n    \"status\": \"success\",\n    \"message\": \"Cuenta eliminada correctamente\",\n    \"data\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "/movimientos",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numeroCuenta\": \"3006153505\",\n  \"tipoCuenta\": \"AHORRO\",\n  \"estado\": true,\n  \"tipoMovimiento\": \"RETIRO\",\n  \"valor\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://{{servidor}}:{{puertoAccount}}/api/{{metodoAccount}}/movimientos",
+              "protocol": "http",
+              "host": [
+                "{{servidor}}"
+              ],
+              "port": "{{puertoAccount}}",
+              "path": [
+                "api",
+                "{{metodoAccount}}",
+                "movimientos"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "/movimientos - Deposito",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"numeroCuenta\": \"8981685511\",\n  \"tipoCuenta\": \"AHORRO\",\n  \"estado\": true,\n  \"tipoMovimiento\": \"DEPOSITO\",\n  \"valor\": 200\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/movimientos",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "movimientos"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Apr 2026 15:58:21 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"statusCode\": 201,\n    \"status\": \"success\",\n    \"message\": \"Created\",\n    \"data\": {\n        \"id\": \"bb5ffc0c-2f9c-4637-a828-6b6b2515e1cd\",\n        \"fecha\": \"2026-04-14T10:58:21.289675304\",\n        \"tipoMovimiento\": \"DEPOSITO\",\n        \"valor\": 200,\n        \"saldo\": 3600,\n        \"cuentaId\": \"ee43913a-6755-48d9-ac83-e6f5159818cf\"\n    }\n}"
+            },
+            {
+              "name": "/movimientos - Sin saldo",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"numeroCuenta\": \"8981685511\",\n  \"tipoCuenta\": \"AHORRO\",\n  \"estado\": true,\n  \"tipoMovimiento\": \"RETIRO\",\n  \"valor\": 1300\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8081/movimientos",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "movimientos"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Apr 2026 16:02:25 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"statusCode\": 400,\n    \"status\": \"error\",\n    \"message\": \"Saldo no disponible\",\n    \"data\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "/movimientos",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numeroCuenta\": \"3006153505\",\n  \"tipoCuenta\": \"AHORRO\",\n  \"estado\": true,\n  \"tipoMovimiento\": \"RETIRO\",\n  \"valor\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://{{servidor}}:{{puertoAccount}}/api/{{metodoAccount}}/movimientos/94732331-1b31-42f1-a407-132df393f3d0",
+              "protocol": "http",
+              "host": [
+                "{{servidor}}"
+              ],
+              "port": "{{puertoAccount}}",
+              "path": [
+                "api",
+                "{{metodoAccount}}",
+                "movimientos",
+                "94732331-1b31-42f1-a407-132df393f3d0"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "/movimientos",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"numeroCuenta\": \"3006153505\",\n  \"tipoCuenta\": \"AHORRO\",\n  \"estado\": true,\n  \"tipoMovimiento\": \"RETIRO\",\n  \"valor\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://{{servidor}}:{{puertoAccount}}/api/{{metodoAccount}}/movimientos/94732331-1b31-42f1-a407-132df393f3d0",
+                  "protocol": "http",
+                  "host": [
+                    "{{servidor}}"
+                  ],
+                  "port": "{{puertoAccount}}",
+                  "path": [
+                    "api",
+                    "{{metodoAccount}}",
+                    "movimientos",
+                    "94732331-1b31-42f1-a407-132df393f3d0"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 15 Apr 2026 15:34:23 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"statusCode\": 200,\n    \"status\": \"success\",\n    \"message\": \"Movimiento eliminado y reverso registrado\",\n    \"data\": {\n        \"id\": \"5db16fae-837b-47b9-91ef-23e62082a39a\",\n        \"fecha\": \"2026-04-15T15:34:23.005524857\",\n        \"tipoMovimiento\": \"DEPOSITO\",\n        \"valor\": 100,\n        \"saldo\": 600,\n        \"cuentaId\": \"445bcab3-3ea2-475f-b4ec-0fc1ddd64d34\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/reportes",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://{{servidor}}:{{puertoAccount}}/api/{{metodoAccount}}/reportes?numeroCuenta=3006153505&fechaInicio=2026-04-13&fechaFin=2026-04-15",
+              "protocol": "http",
+              "host": [
+                "{{servidor}}"
+              ],
+              "port": "{{puertoAccount}}",
+              "path": [
+                "api",
+                "{{metodoAccount}}",
+                "reportes"
+              ],
+              "query": [
+                {
+                  "key": "numeroCuenta",
+                  "value": "3006153505"
+                },
+                {
+                  "key": "fechaInicio",
+                  "value": "2026-04-13"
+                },
+                {
+                  "key": "fechaFin",
+                  "value": "2026-04-15"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "/reportes",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8081/reportes?numeroCuenta=9763893434&fechaInicio=2026-04-13&fechaFin=2026-04-13",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "reportes"
+                  ],
+                  "query": [
+                    {
+                      "key": "numeroCuenta",
+                      "value": "9763893434"
+                    },
+                    {
+                      "key": "fechaInicio",
+                      "value": "2026-04-13"
+                    },
+                    {
+                      "key": "fechaFin",
+                      "value": "2026-04-13"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Apr 2026 16:36:27 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"statusCode\": 200,\n    \"status\": \"success\",\n    \"message\": \"OK\",\n    \"data\": [\n        {\n            \"cliente\": \"Kelvin Vargas Prueba Final\",\n            \"numeroCuenta\": \"8981685511\",\n            \"tipoCuenta\": \"AHORRO\",\n            \"saldoInicial\": 1000,\n            \"estado\": true,\n            \"fecha\": \"2026-04-13T11:02:24.924\",\n            \"tipoMovimiento\": \"RETIRO\",\n            \"valor\": 1300,\n            \"saldoDisponible\": 300\n        }\n    ]\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
