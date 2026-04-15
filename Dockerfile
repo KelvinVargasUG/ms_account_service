@@ -11,4 +11,6 @@ FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=build /app/build/libs/*.jar app.jar
 EXPOSE 8081
+HEALTHCHECK --interval=15s --timeout=3s --start-period=30s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:8081/api/ms-account-service/actuator/health || exit 1
 ENTRYPOINT ["java", "-jar", "app.jar"]
